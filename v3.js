@@ -60,8 +60,8 @@
   update();
 })();
 
-/* V6 progressive enhancement. V4 = WebGL exterior, V5 = continuity/lighting,
-   V6 = single-camera proxy architecture from entrance through the grand hall. */
+/* V7 progressive enhancement. V4 = WebGL exterior, V5 = continuity/lighting,
+   V6 = proxy architecture, V7 = coherent Higgsfield conceptual venue imagery. */
 (()=>{
   const addCss=(href,key)=>{
     if(document.querySelector(`link[data-${key}]`))return;
@@ -71,10 +71,12 @@
   addCss('v4.css','v4');
   addCss('v5.css','v5');
   addCss('v6.css','v6');
+  addCss('v7.css','v7');
   import('./v4.js').catch(err=>{
     console.warn('V4 WebGL unavailable; retaining image fallback.',err);
     document.documentElement.classList.add('webgl-fallback');
   });
   import('./v5.js').catch(err=>console.warn('V5 continuity enhancement unavailable.',err));
   import('./v6.js').catch(err=>console.warn('V6 architectural proxy unavailable.',err));
+  import('./v7.js').catch(err=>console.warn('V7 coherent asset layer unavailable.',err));
 })();
