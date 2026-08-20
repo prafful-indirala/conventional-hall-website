@@ -1,0 +1,32 @@
+/* Cinematic V3 overrides: wider establishing shot, deeper 2.5D motion, cleaner mobile composition and stronger threshold transition. */
+.cinematic-v2{height:1080vh}
+.scene-stack{perspective:1800px}
+.scene-exterior{inset:-10%}
+.scene-exterior .local-exterior{background-position:center 44%!important;filter:saturate(.95) contrast(1.02) brightness(.96)!important;transform-origin:52% 52%}
+.scene-exterior .exterior-sky{opacity:.72;background:radial-gradient(ellipse at 68% 18%,rgba(44,88,130,.28),transparent 46%)}
+.scene-exterior .exterior-architecture{box-shadow:inset 0 0 180px rgba(255,210,145,.03)}
+.scene-exterior .exterior-ground{opacity:.34;height:30%}
+.scene-exterior .arrival-light{opacity:.25;filter:blur(34px)}
+.cinematic-copy{max-width:650px;bottom:17vh}.cinematic-copy h1{font-size:clamp(46px,5.2vw,82px)}
+.entrance-mask{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 0 22%,rgba(0,0,0,.08) 36%,rgba(0,0,0,.78) 82%);opacity:0}
+.portal-frame:before{box-shadow:0 0 150px rgba(229,194,142,.18),inset 0 0 120px rgba(229,194,142,.08)}
+.scene-threshold{background:#020202}.threshold-tunnel{inset:-4%;perspective:900px}.threshold-tunnel i{border-radius:48% 48% 4% 4%/16% 16% 4% 4%;border-color:rgba(240,220,187,.25);box-shadow:0 0 70px rgba(255,225,178,.04)}
+.threshold-light{width:25vw;height:38vh;filter:blur(18px);opacity:.2}
+.scene-lobby,.scene-hall,.scene-transform,.scene-stage{inset:-7%}
+.remote-lobby,.remote-lobby-two{filter:saturate(.78) contrast(1.08) brightness(.78)}
+.remote-hall,.remote-hall-two{filter:saturate(.86) contrast(1.06) brightness(.84)}
+.remote-stage,.remote-stage-two{filter:saturate(.9) contrast(1.05) brightness(.82)}
+.hall-beams{opacity:.8}.configuration-label span{font-size:clamp(40px,8vw,132px);opacity:.8}
+@media(max-width:900px){
+ .cinematic-v2{height:980vh}
+ .scene-exterior{inset:-5%}
+ .scene-exterior .local-exterior{background-position:50% 48%!important;filter:saturate(.96) contrast(1.01) brightness(.99)!important}
+ .cinematic-copy{left:7vw;right:14vw;bottom:16.5vh;max-width:none}
+ .cinematic-copy h1{font-size:clamp(38px,10.4vw,58px);line-height:.97}
+ .cinematic-copy .eyebrow{font-size:7px;letter-spacing:.2em;margin-bottom:13px}
+ .micro{font-size:8px;margin-top:20px}
+ .scene-caption{width:180px;bottom:5.5vh}.caption-title{font-size:17px}.caption-sub{font-size:8px}
+ .scroll-rail{right:12px}.portal-frame:before{width:58vw;height:50vh}
+ .threshold-light{width:48vw;height:34vh}
+ .transformation-copy{top:auto;bottom:14vh}
+}
