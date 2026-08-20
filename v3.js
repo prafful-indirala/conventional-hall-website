@@ -60,17 +60,19 @@
   update();
 })();
 
-/* V4 progressive enhancement: inject CSS and load the WebGL exterior module.
-   If Three.js/CDN/WebGL fails, the V3 CSS/image experience remains fully functional. */
+/* V5 progressive enhancement. V4 remains the WebGL exterior foundation,
+   while V5 adds continuity, hall choreography, lighting and the handoff. */
 (()=>{
-  if(document.querySelector('link[data-v4]')) return;
-  const link=document.createElement('link');
-  link.rel='stylesheet';
-  link.href='v4.css';
-  link.dataset.v4='true';
-  document.head.appendChild(link);
+  const addCss=(href,key)=>{
+    if(document.querySelector(`link[data-${key}]`))return;
+    const link=document.createElement('link');
+    link.rel='stylesheet';link.href=href;link.dataset[key]='true';document.head.appendChild(link);
+  };
+  addCss('v4.css','v4');
+  addCss('v5.css','v5');
   import('./v4.js').catch(err=>{
-    console.warn('V4 enhancement unavailable; keeping V3 fallback.',err);
+    console.warn('V4 WebGL unavailable; retaining image fallback.',err);
     document.documentElement.classList.add('webgl-fallback');
   });
+  import('./v5.js').catch(err=>console.warn('V5 continuity enhancement unavailable.',err));
 })();
