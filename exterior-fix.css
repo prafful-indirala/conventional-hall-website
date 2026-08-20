@@ -1,0 +1,22 @@
+/* Hotfix: ensure the local exterior image renders from the repository root and remains visible through the cinematic grading. */
+.local-exterior{
+  background-image:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.18)),url('/exterior.jpg') !important;
+  background-position:center 48% !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  filter:saturate(.92) contrast(1.04) brightness(.94) !important;
+}
+.local-exterior-crop{
+  background-image:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.14)),url('/exterior.jpg') !important;
+  background-size:cover !important;
+  background-position:center !important;
+}
+.scene-exterior .exterior-sky{opacity:.5}
+.scene-exterior .exterior-ground{opacity:.48}
+.scene-exterior .arrival-light{opacity:.34}
+.scene-exterior{background:#090806}
+@media(max-width:900px){
+  .local-exterior{background-position:56% 48% !important;filter:saturate(.94) contrast(1.02) brightness(.98) !important}
+  .scene-exterior .exterior-ground{opacity:.32}
+  .scene-exterior .arrival-light{opacity:.22}
+}
