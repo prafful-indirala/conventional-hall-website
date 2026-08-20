@@ -1,1 +1,69 @@
-(()=>{const cinematic=document.getElementById('cinematic');if(!cinematic||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const ext=document.querySelector('.scene-exterior');const extImg=ext?.querySelector('.local-exterior');const sky=ext?.querySelector('.exterior-sky');const arch=ext?.querySelector('.exterior-architecture');const ground=ext?.querySelector('.exterior-ground');const glow=ext?.querySelector('.arrival-light');const entrance=document.querySelector('.scene-entrance');const entranceMask=entrance?.querySelector('.entrance-mask');const tunnel=[...document.querySelectorAll('.threshold-tunnel i')];const thresholdLight=document.querySelector('.threshold-light');const hall=document.querySelector('.scene-hall');const hallImg=hall?.querySelector('.remote-hall');const transform=document.querySelector('.scene-transform');const stage=document.querySelector('.scene-stage');const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));const smooth=t=>t*t*(3-2*t);const seg=(p,a,b)=>clamp((p-a)/(b-a));let current=0,target=0,raf=0;function apply(){current+=(target-current)*.085;const p=current;const dolly=smooth(seg(p,.035,.18));if(ext){ext.style.transform=`scale(${1+dolly*.18}) translate3d(${-dolly*.8}%,${dolly*.7}%,0) rotateX(${dolly*.18}deg)`}if(extImg){extImg.style.transform=`translate3d(${dolly*.4}%,${dolly*.2}%,${dolly*34}px) scale(${1+dolly*.025})`}if(sky)sky.style.transform=`translate3d(${dolly*1.8}%,${-dolly*.5}%,0) scale(${1+dolly*.018})`;if(arch)arch.style.transform=`translate3d(${-dolly*.35}%,${dolly*.2}%,${dolly*52}px) scale(${1+dolly*.018})`;if(ground)ground.style.transform=`translate3d(${-dolly*1.9}%,${dolly*2.6}%,${dolly*88}px) scale(${1+dolly*.06})`;if(glow)glow.style.transform=`scale(${1+dolly*.22})`;const approach=smooth(seg(p,.22,.40));if(entrance)entrance.style.transform=`scale(${1.08+approach*.7}) translate3d(${5-approach*6.5}%,${1+approach*2.2}%,${approach*100}px)`;if(entranceMask)entranceMask.style.opacity=smooth(seg(p,.32,.42));const cross=smooth(seg(p,.41,.51));tunnel.forEach((el,i)=>{const base=[1,.76,.52,.3][i];el.style.transform=`scale(${base+cross*(1.8-i*.19)}) rotateZ(${(i%2?1:-1)*cross*.6}deg)`;el.style.opacity=String(.48-cross*.35)});if(thresholdLight){thresholdLight.style.transform=`scale(${.55+cross*3.8})`;thresholdLight.style.opacity=String(.15+cross*.55)}const hallIn=smooth(seg(p,.64,.72));const hallDrift=smooth(seg(p,.76,.84));if(hall){hall.style.transform=`scale(${1.18-hallIn*.14+hallDrift*.035}) translate3d(${-hallDrift*1.8}%,${-hallDrift*.45}%,${hallIn*45+hallDrift*25}px) rotateY(${hallDrift*.4}deg)`}if(hallImg){hallImg.style.filter=`saturate(${.8+hallIn*.18}) contrast(1.05) brightness(${.72+hallIn*.2})`}const tf=smooth(seg(p,.835,.93));if(transform)transform.style.transform=`scale(${1.07-tf*.035}) translate3d(${tf*.8}%,${-tf*.25}%,0)`;const st=smooth(seg(p,.94,1));if(stage)stage.style.transform=`scale(${1.1+st*.12}) translate3d(${(1-st)*-1.6}%,${1.2-st*2.1}%,${st*38}px)`;if(Math.abs(target-current)>.0003)raf=requestAnimationFrame(apply);else raf=0}function update(){const r=cinematic.getBoundingClientRect();const total=Math.max(1,cinematic.offsetHeight-innerHeight);target=clamp(-r.top/total);if(!raf)raf=requestAnimationFrame(apply)}addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();})();
+(()=>{
+  const cinematic=document.getElementById('cinematic');
+  if(!cinematic||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+
+  const ext=document.querySelector('.scene-exterior');
+  const extImg=ext?.querySelector('.local-exterior');
+  const sky=ext?.querySelector('.exterior-sky');
+  const arch=ext?.querySelector('.exterior-architecture');
+  const ground=ext?.querySelector('.exterior-ground');
+  const glow=ext?.querySelector('.arrival-light');
+  const entranceMask=document.querySelector('.entrance-mask');
+  const tunnel=[...document.querySelectorAll('.threshold-tunnel i')];
+  const thresholdLight=document.querySelector('.threshold-light');
+  const hallImg=document.querySelector('.scene-hall .remote-hall');
+
+  const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
+  const smooth=t=>t*t*(3-2*t);
+  const seg=(p,a,b)=>clamp((p-a)/(b-a));
+
+  let current=0,target=0,raf=0;
+
+  function apply(){
+    current+=(target-current)*.12;
+    const p=current;
+    const dolly=smooth(seg(p,.035,.18));
+
+    /* V3 only animates INNER layers.
+       Scene container transforms remain exclusively controlled by script.js,
+       preventing two RAF loops from fighting over the same transform property. */
+    if(extImg)extImg.style.transform=`translate3d(${dolly*.36}%,${dolly*.18}%,0) scale(${1+dolly*.022})`;
+    if(sky)sky.style.transform=`translate3d(${dolly*1.35}%,${-dolly*.4}%,0) scale(${1+dolly*.014})`;
+    if(arch)arch.style.transform=`translate3d(${-dolly*.28}%,${dolly*.14}%,0) scale(${1+dolly*.012})`;
+    if(ground)ground.style.transform=`translate3d(${-dolly*1.35}%,${dolly*1.7}%,0) scale(${1+dolly*.045})`;
+    if(glow)glow.style.transform=`scale(${1+dolly*.16})`;
+
+    if(entranceMask)entranceMask.style.opacity=smooth(seg(p,.32,.42));
+
+    const cross=smooth(seg(p,.41,.51));
+    tunnel.forEach((el,i)=>{
+      const base=[1,.76,.52,.3][i];
+      el.style.transform=`scale(${base+cross*(1.45-i*.14)}) rotateZ(${(i%2?1:-1)*cross*.35}deg)`;
+      el.style.opacity=String(.46-cross*.3);
+    });
+    if(thresholdLight){
+      thresholdLight.style.transform=`scale(${.7+cross*2.8})`;
+      thresholdLight.style.opacity=String(.12+cross*.42);
+    }
+
+    const hallIn=smooth(seg(p,.64,.72));
+    if(hallImg){
+      hallImg.style.transform=`translate3d(${hallIn*-.45}%,${hallIn*-.15}%,0) scale(${1+hallIn*.018})`;
+      hallImg.style.filter=`saturate(${.82+hallIn*.12}) contrast(1.05) brightness(${.76+hallIn*.12})`;
+    }
+
+    if(Math.abs(target-current)>.0004)raf=requestAnimationFrame(apply);
+    else raf=0;
+  }
+
+  function update(){
+    const r=cinematic.getBoundingClientRect();
+    const total=Math.max(1,cinematic.offsetHeight-innerHeight);
+    target=clamp(-r.top/total);
+    if(!raf)raf=requestAnimationFrame(apply);
+  }
+
+  addEventListener('scroll',update,{passive:true});
+  addEventListener('resize',update);
+  update();
+})();
