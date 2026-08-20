@@ -1,0 +1,8 @@
+/* V6 — proxy architectural 3D environment */
+.v6-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none;opacity:0;transition:opacity .8s var(--ease)}
+.v6-ready .v6-canvas{opacity:1}
+.v6-ready .scene-lobby .scene-image,.v6-ready .scene-hall .scene-image,.v6-ready .scene-stage .scene-image{opacity:.58}
+.v6-ready .scene-transform .scene-image{opacity:.52}
+.v6-badge{position:absolute;left:50%;bottom:56px;transform:translateX(-50%);z-index:46;font-size:7px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.52);opacity:0;transition:opacity .5s;pointer-events:none}.v6-ready .v6-badge{opacity:1}
+@media(max-width:900px){.v6-canvas{opacity:.88}.v6-badge{bottom:45px;font-size:6px}}
+@media(prefers-reduced-motion:reduce){.v6-canvas,.v6-badge{display:none}}
