@@ -10,10 +10,10 @@
   const label=document.createElement('div');label.className='v8-motion-label';label.textContent='Scroll-scrubbed cinematic motion';sticky.appendChild(label);
   const title=document.createElement('div');title.className='v8-transform-title';title.innerHTML='<small>One extraordinary space</small><strong>Endless possibilities.</strong>';sticky.appendChild(title);
 
-  // V8 is designed around motion assets, but every scene falls back to V7 stills/WebGL when a motion URL is absent or unavailable.
+  // Two Higgsfield motion shots are live now. Other sections continue using the V7 coherent stills + WebGL proxy until more motion credits are available.
   const motion={
-    lobby:null,
-    stage:null
+    lobby:'https://d8j0ntlcm91z4.cloudfront.net/user_3I9jCgewYIVRFd0JvSQVcS5Frsr/hf_20260820_013156_3da015c4-b65f-4282-a72f-f4848b94b1ad.mp4',
+    stage:'https://d8j0ntlcm91z4.cloudfront.net/user_3I9jCgewYIVRFd0JvSQVcS5Frsr/hf_20260820_013156_4a880a3d-9c8b-4e0e-86d8-b57b8c56c263.mp4'
   };
 
   const windows={lobby:[.49,.64],stage:[.925,.995]};
@@ -54,6 +54,5 @@
   function update(){const r=cinematic.getBoundingClientRect();const total=Math.max(1,cinematic.offsetHeight-innerHeight);target=clamp(-r.top/total);if(!raf)raf=requestAnimationFrame(tick)}
   addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
 
-  // Public hook lets completed Higgsfield motion assets be attached without altering the rest of the V8 timeline.
   window.__ELAN_V8_ATTACH_MOTION__=(key,url)=>{if(key in motion&&url){motion[key]=url;if(choose(current)===key)setVideo(key)}};
 })();
