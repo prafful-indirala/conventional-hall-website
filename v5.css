@@ -1,0 +1,15 @@
+/* V5 — scene continuity, lighting, hall choreography, seamless handoff */
+:root{--cinema-warm:rgba(255,222,176,.22);--cinema-cool:rgba(111,148,183,.14)}
+.cinematic-v2{height:1180vh}
+.scene-stack:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:14;background:radial-gradient(ellipse at 50% 48%,transparent 38%,rgba(0,0,0,.12) 63%,rgba(0,0,0,.5));mix-blend-mode:multiply}
+.v5-light-volume{position:absolute;inset:0;z-index:11;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 40%,var(--cinema-warm),transparent 48%),linear-gradient(180deg,rgba(255,255,255,.03),transparent 28%,rgba(0,0,0,.08));mix-blend-mode:screen;will-change:opacity,transform}
+.v5-depth-haze{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(255,255,255,.015),rgba(225,205,180,.055) 56%,rgba(0,0,0,.16));backdrop-filter:blur(.5px)}
+.v5-foreground{position:absolute;left:-4%;right:-4%;bottom:-8%;height:30%;z-index:9;opacity:0;pointer-events:none;background:radial-gradient(ellipse at 20% 80%,rgba(0,0,0,.7),transparent 36%),radial-gradient(ellipse at 82% 86%,rgba(0,0,0,.66),transparent 38%);filter:blur(12px);will-change:transform,opacity}
+.v5-handoff{position:absolute;inset:0;z-index:45;pointer-events:none;opacity:0;background:linear-gradient(180deg,transparent 0 55%,rgba(12,10,8,.3) 73%,#0c0a08 100%)}
+.transition-section{position:relative;z-index:2;margin-top:-1px}
+.scene-hall .remote-hall,.scene-transform .remote-hall-two,.scene-stage .remote-stage{transform-origin:50% 52%}
+.scene-hall:before,.scene-stage:before{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at 50% 44%,rgba(255,232,190,.12),transparent 34%,rgba(0,0,0,.05) 62%,rgba(0,0,0,.28));mix-blend-mode:screen}
+.scene-transform .configuration-label{z-index:7}.configuration-label span{transition:opacity .35s ease,letter-spacing .35s ease}
+.scene-transform[data-mode="wedding"] .configuration-label span{letter-spacing:.16em}.scene-transform[data-mode="reception"] .configuration-label span{letter-spacing:.1em}.scene-transform[data-mode="corporate"] .configuration-label span{letter-spacing:.06em}
+@media(max-width:900px){.cinematic-v2{height:1060vh}.v5-foreground{height:24%;filter:blur(10px)}.scene-stack:after{background:radial-gradient(ellipse at 50% 48%,transparent 36%,rgba(0,0,0,.16) 67%,rgba(0,0,0,.5))}}
+@media(prefers-reduced-motion:reduce){.v5-light-volume,.v5-depth-haze,.v5-foreground,.v5-handoff{display:none}}
