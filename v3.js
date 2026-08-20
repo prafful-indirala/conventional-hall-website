@@ -24,15 +24,11 @@
     const p=current;
     const dolly=smooth(seg(p,.035,.18));
 
-    /* V3 only animates INNER layers.
-       Scene container transforms remain exclusively controlled by script.js,
-       preventing two RAF loops from fighting over the same transform property. */
     if(extImg)extImg.style.transform=`translate3d(${dolly*.36}%,${dolly*.18}%,0) scale(${1+dolly*.022})`;
     if(sky)sky.style.transform=`translate3d(${dolly*1.35}%,${-dolly*.4}%,0) scale(${1+dolly*.014})`;
     if(arch)arch.style.transform=`translate3d(${-dolly*.28}%,${dolly*.14}%,0) scale(${1+dolly*.012})`;
     if(ground)ground.style.transform=`translate3d(${-dolly*1.35}%,${dolly*1.7}%,0) scale(${1+dolly*.045})`;
     if(glow)glow.style.transform=`scale(${1+dolly*.16})`;
-
     if(entranceMask)entranceMask.style.opacity=smooth(seg(p,.32,.42));
 
     const cross=smooth(seg(p,.41,.51));
@@ -41,10 +37,7 @@
       el.style.transform=`scale(${base+cross*(1.45-i*.14)}) rotateZ(${(i%2?1:-1)*cross*.35}deg)`;
       el.style.opacity=String(.46-cross*.3);
     });
-    if(thresholdLight){
-      thresholdLight.style.transform=`scale(${.7+cross*2.8})`;
-      thresholdLight.style.opacity=String(.12+cross*.42);
-    }
+    if(thresholdLight){thresholdLight.style.transform=`scale(${.7+cross*2.8})`;thresholdLight.style.opacity=String(.12+cross*.42)}
 
     const hallIn=smooth(seg(p,.64,.72));
     if(hallImg){
@@ -52,8 +45,7 @@
       hallImg.style.filter=`saturate(${.82+hallIn*.12}) contrast(1.05) brightness(${.76+hallIn*.12})`;
     }
 
-    if(Math.abs(target-current)>.0004)raf=requestAnimationFrame(apply);
-    else raf=0;
+    if(Math.abs(target-current)>.0004)raf=requestAnimationFrame(apply);else raf=0;
   }
 
   function update(){
@@ -66,4 +58,19 @@
   addEventListener('scroll',update,{passive:true});
   addEventListener('resize',update);
   update();
+})();
+
+/* V4 progressive enhancement: inject CSS and load the WebGL exterior module.
+   If Three.js/CDN/WebGL fails, the V3 CSS/image experience remains fully functional. */
+(()=>{
+  if(document.querySelector('link[data-v4]')) return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href='v4.css';
+  link.dataset.v4='true';
+  document.head.appendChild(link);
+  import('./v4.js').catch(err=>{
+    console.warn('V4 enhancement unavailable; keeping V3 fallback.',err);
+    document.documentElement.classList.add('webgl-fallback');
+  });
 })();
